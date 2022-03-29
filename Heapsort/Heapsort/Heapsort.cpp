@@ -3,69 +3,86 @@
 
 using namespace std;
 
-void heapSort(const string fname);
+void heapify(int* tabela, int size, int i);
+void heapSort(int* tabela, int size);
+void view(int* tabela, int size);
 
-int heapAlgo(int tabela, int testCases, int size);
-int max(int tabela, int size);
+//========================================
 
 int main()
 {
-	heapSort("Plik.txt");
-	return 0;
-}
-
-void heapSort(const string fname)
-{
-	ifstream dane(fname);
+	
+	ifstream dane("Plik.txt");
 	int testCases;
 	dane >> testCases;
+	cout << "Przypadki testowe: " << testCases << endl;
 	int size = 0;
 	for (int i = 0; i < testCases; i++)
 	{
-		cout << "Case " << i << endl;
 		dane >> size;
+		cout << "Case " << i + 1 << " , size: " << size << endl;
 		int* tabela = new int[size];
 		for (int j = 0; j < size; j++)
 		{
 			dane >> tabela[j];
 			cout << tabela[j] << " ";
 		}
-		cout << endl;
+		cout << endl << endl;
+
+		heapSort(tabela, size);
+
+		cout << "Finalnie: ";
+		for (int i = 0; i < size; i++)
+		{
+			cout << tabela[i] << " ";
+		}
+		cout << endl << endl;
 		delete[] tabela;
 	}
-
+	return 0;
 }
 
-int max(int* tabela, int size)
+//========================================
+
+void heapify(int* tabela, int size, int i)
 {
-	int max = tabela[0];
+	int largest = i;
+	int left = 2 * i + 1;
+	int right = 2 * i + 2;
+
+	if (left < size && tabela[left] > tabela[largest])
+		largest = left;
+
+	if (right < size && tabela[right] > tabela[largest])
+		largest = right;
+
+	if (largest != i)
+	{
+		swap(tabela[i], tabela[largest]);
+		view(tabela, size);
+		heapify(tabela, size, largest);
+	}
+}
+
+void heapSort(int* tabela, int size)
+{
+	for (int i = size / 2 - 1; i >= 0; i--)
+	{
+		heapify(tabela, size, i);
+	}
+
+	for (int i = size - 1; i > 0; i--)
+	{
+		swap(tabela[0], tabela[i]);
+		heapify(tabela, i, 0);
+	}
+}
+
+void view(int* tabela, int size)
+{
 	for (int i = 0; i < size; i++)
 	{
-		if (tabela[i] > max)
-			max = tabela[i];
+		cout << tabela[i] << " ";
 	}
-	return max;
-}
-
-int heapAlgo(int* tabela, int testCases, int size)
-{
-	for (int i = size; i > 0; i--)
-	{
-		tabela[size] = max(tabela, size);
-		int largest = size;
-		int left = 2 * size + 1;
-		int right = 2 * size + 2;
-
-		if (left < size && tabela[left] > tabela[largest])
-			largest = left;
-
-		if (right < size && tabela[right] > tabela[largest])
-			largest = right;
-
-		if (largest != size)
-		{
-			swap(tabela[size], tabela[largest]);
-			heapAlgo
-		}
-	}
+	cout << endl;
 }
