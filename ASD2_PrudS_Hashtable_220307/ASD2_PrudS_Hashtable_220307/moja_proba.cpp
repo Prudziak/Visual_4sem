@@ -9,17 +9,17 @@ using namespace std;
 class Hashtable
 {
 public:
-	Hashtable() : key(NULL), chain(""), baseIndex(NULL) {}
+	Hashtable() : key(NULL), chain(""), odleglosc(NULL) {}
 	~Hashtable();
 	
-	void Input(const string fName);
+	void Input(const string fIn, const string fOut);
 
 	friend ostream& operator<<(ostream& s, Hashtable& K);
 
-private:
+public:
 	long key;
 	string chain;
-	long baseIndex;
+	long odleglosc;
 };
 
 ostream& operator<<(ostream& s, Hashtable& K)
@@ -35,9 +35,10 @@ Hashtable::~Hashtable()
 }
 
 
-void Hashtable::Input(const string fName)
+void Hashtable::Input(const string fIn, const string fOut)
 {
-	ifstream dane(fName);
+	ifstream dane(fIn);
+	ofstream zapis(fOut);
 	int cases;
 	long size;
 	string akcja;
@@ -52,87 +53,141 @@ void Hashtable::Input(const string fName)
 	int testy = 0;
 	while (testy < cases)
 	{
-		while (dane.is_open())
+		while (!dane.eof())
 		{
-			while (!dane.eof())
+			dane >> akcja;
+			if (akcja == "size")
 			{
-				dane >> akcja;
-				//cout << akcja << endl;
-				if (akcja == "size")
+				dane >> size;
+				tab = new Hashtable[size];
+			}
+			if (akcja == "add")
+			{
+				dane >> key >> chain;
+				long indeks = key % size;
+				int k = 0;
+				while (tab[indeks].key != NULL)
 				{
-					dane >> size;
-					tab = new Hashtable[size];
+					if (indeks == size - 1)
+						indeks = -1;
+					indeks += 1;
+					k += 1;
 				}
-				if (akcja == "add")
+				tab[indeks].key = key;
+				tab[indeks].chain = chain;
+				tab[indeks].odleglosc = k;
+			}
+			if (akcja == "delete")
+			{
+				dane >> key;
+				long indeks = key % size;
+				while (tab[indeks].key != key)
 				{
-					dane >> key >> chain;
-					long indeks = key % size;
-					//cout << "Key i chain: " << key << " " << chain << endl;
-					if (tab[indeks].key == NULL && tab[indeks].chain == "")
-					{
-						tab[indeks].key = key;
-						tab[indeks].chain = chain;
-						baseIndex = indeks;
-						cout << "Indeks: " << indeks << ", Base index: " << baseIndex << endl;
-						//cout << "Indeks: " << indeks << endl;
-					}
-					else
-					{
-						if (indeks + 1 < size)
-						{
-							tab[indeks+1].key = key;
-							tab[indeks+1].chain = chain;
-							baseIndex = indeks;
-							cout << "Indeks: " << indeks << ", Base index: " << baseIndex << endl;
-						}
-					}
+					if (indeks == size - 1)
+						indeks = -1;
+					indeks++;
 				}
-				if (akcja == "delete")
+				tab[indeks].key = NULL;
+				tab[indeks].chain = "";
+				tab[indeks].odleglosc = NULL;
+
+				long x = indeks + 1;
+				if (x == size)
+					x = 0;
+
+				while (x != indeks)
 				{
-					dane >> key;
-					long indeks = key % size;
-					tab[indeks].key = NULL;
-					tab[indeks].chain = "";
-					tab[indeks].baseIndex = NULL;
-
-					int x = indeks + 1;
-					if (x == size)
-						x = 0;
-
-					while (x != indeks)
-					{
-						long distance = x - (x - tab[x].baseIndex);
+					if (tab[x].key != NULL)
+					{	
+						long distance = x - tab[x].odleglosc;
 						if (distance < 0)
 							distance = size + distance;
-
-
-					}
-				}
-				if (akcja == "print")
-				{
-					for (int i = 0; i < size; i++)
-					{
-						if (tab[i].key != NULL)
+						if (tab[distance].key == NULL && tab[x].odleglosc != 0)
 						{
-							cout << i << " " << tab[i];
+							tab[distance].key = tab[x].key;
+							tab[distance].chain = tab[x].chain;
+							tab[distance].odleglosc = 0;
+							tab[x].key = NULL;
+							tab[x].chain = "";
+							tab[x].odleglosc = NULL;
 						}
 					}
-					cout << endl;
+					if (x == size - 1)
+						x = -1;
+					x++;
 				}
-				if (akcja == "stop")
+				x = indeks + 1;
+				while (x != indeks)
 				{
-					delete[] tab;
-					testy += 1;
+					if (x == size)
+						x = 0;
+					if (tab[x].key != NULL && tab[x].odleglosc != 0)
+					{
+						int d2 = x - tab[x].odleglosc;
+						if (d2 < 0)
+							d2 = size + d2;
+						if (d2 == size)
+							d2 = 0;
+						int d3 = x - 1;
+						if (d3 < 0)
+							d3 = size - 1;
+						int q = d3;
+						int z = 0;
+						while (q != d2)
+						{
+							if (q == -1)
+								q = size - 1;
+							if (tab[q].key == NULL)
+							{
+								if (tab[x].key != NULL)
+								{
+									tab[q].odleglosc = tab[x].odleglosc - (z + 1);
+									tab[q].key = tab[x].key;
+									tab[q].chain = tab[x].chain;
+									tab[x].key = NULL;
+									tab[x].chain = "";
+									tab[x].odleglosc = NULL;
+								}
+							}
+							z++;
+							q--;
+						}
+					}
+					x++;
 				}
+			}
+			if (akcja == "print")
+			{
+				for (int i = 0; i < size; i++)
+				{
+					if (tab[i].key != NULL)
+					{
+						zapis << i << " " << tab[i];
+					}
+				}
+				zapis << endl;
+			}
+			if (akcja == "stop")
+			{
+				testy += 1;
 			}
 		}
 	}
+		for (int i = 0; i < size; i++)
+		{
+			tab[i].key = NULL;
+			tab[i].chain = "";
+			tab[i].odleglosc = NULL;
+		}
+	dane.close();
+	zapis.close();
+	delete[] tab;
 }
 
 int main()
 {
 	Hashtable X;
-	X.Input("hashtable.txt");
+	X.Input("hashtable.txt", "output.txt");
 	return 0;
 }
 

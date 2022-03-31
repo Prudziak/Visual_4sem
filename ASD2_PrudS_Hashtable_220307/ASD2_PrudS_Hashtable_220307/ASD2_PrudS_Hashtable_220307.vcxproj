@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\Szymon\Desktop\moja_proba.cpp" />
+    <ClCompile Include="D:\VisualRepos\Hashtable\Visual_4sem\ASD2_PrudS_Hashtable_220307\ASD2_PrudS_Hashtable_220307\moja_proba.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
