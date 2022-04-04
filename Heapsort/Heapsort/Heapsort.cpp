@@ -59,7 +59,6 @@ void heapify(int* tabela, int size, int i)
 	if (largest != i)
 	{
 		swap(tabela[i], tabela[largest]);
-		view(tabela, size);
 		heapify(tabela, size, largest);
 	}
 }
@@ -73,6 +72,7 @@ void heapSort(int* tabela, int size)
 
 	for (int i = size - 1; i > 0; i--)
 	{
+		view(tabela, i+1);
 		swap(tabela[0], tabela[i]);
 		heapify(tabela, i, 0);
 	}
