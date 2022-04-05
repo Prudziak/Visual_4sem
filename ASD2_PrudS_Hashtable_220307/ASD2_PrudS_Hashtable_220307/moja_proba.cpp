@@ -37,14 +37,16 @@ Hashtable::~Hashtable()
 
 void Hashtable::Input(const string fIn, const string fOut)
 {
-	ifstream dane(fIn);
-	ofstream zapis(fOut);
+	//ifstream dane(fIn);
+	//ofstream zapis(fOut);
 	int cases;
 	long size;
 	string akcja;
-	dane >> cases;
+	//dane >> cases;
+	cin >> cases;
 	cout << "Cases: " << cases << endl;
-	dane >> akcja >> size; // tworzenie wstepnej tablicy 
+	//dane >> akcja >> size; // tworzenie wstepnej tablicy 
+	cin >> akcja >> size;
 
 	//cout << akcja << " " << size << endl; //test
 
@@ -53,17 +55,20 @@ void Hashtable::Input(const string fIn, const string fOut)
 	int testy = 0;
 	while (testy < cases)
 	{
-		while (!dane.eof())
-		{
-			dane >> akcja;
+		//while (!dane.eof())
+		//{
+			//dane >> akcja;
+		cin >> akcja;
 			if (akcja == "size")
 			{
-				dane >> size;
+				//dane >> size;
+				cin >> size;
 				tab = new Hashtable[size];
 			}
 			if (akcja == "add")
 			{
-				dane >> key >> chain;
+				//dane >> key >> chain;
+				cin >> key >> chain;
 				long indeks = key % size;
 				int k = 0;
 				while (tab[indeks].key != NULL)
@@ -79,7 +84,8 @@ void Hashtable::Input(const string fIn, const string fOut)
 			}
 			if (akcja == "delete")
 			{
-				dane >> key;
+				//dane >> key;
+				cin >> key;
 				long indeks = key % size;
 				while (tab[indeks].key != key)
 				{
@@ -162,16 +168,17 @@ void Hashtable::Input(const string fIn, const string fOut)
 				{
 					if (tab[i].key != NULL)
 					{
-						zapis << i << " " << tab[i];
+						//zapis << i << " " << tab[i];
+						cout << i << " " << tab[i];
 					}
 				}
-				zapis << endl;
+				cout << endl;
 			}
 			if (akcja == "stop")
 			{
 				testy += 1;
 			}
-		}
+		//}
 	}
 		for (int i = 0; i < size; i++)
 		{
@@ -179,8 +186,8 @@ void Hashtable::Input(const string fIn, const string fOut)
 			tab[i].chain = "";
 			tab[i].odleglosc = NULL;
 		}
-	dane.close();
-	zapis.close();
+	//dane.close();
+	//zapis.close();
 	delete[] tab;
 }
 

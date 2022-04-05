@@ -12,19 +12,19 @@ void view(int* tabela, int size);
 int main()
 {
 	
-	ifstream dane("Plik.txt");
+	
 	int testCases;
-	dane >> testCases;
+	cin >> testCases;
 	cout << "Przypadki testowe: " << testCases << endl;
 	int size = 0;
 	for (int i = 0; i < testCases; i++)
 	{
-		dane >> size;
+		cin >> size;
 		cout << "Case " << i + 1 << " , size: " << size << endl;
 		int* tabela = new int[size];
 		for (int j = 0; j < size; j++)
 		{
-			dane >> tabela[j];
+			cin >> tabela[j];
 			cout << tabela[j] << " ";
 		}
 		cout << endl << endl;
