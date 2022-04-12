@@ -1,0 +1,3 @@
+﻿  Metody_12_04.cpp
+D:\VisualRepos\Hashtable\Visual_4sem\Metody_12_04\Metody_12_04\Metody_12_04.cpp(28,12): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+  Metody_12_04.vcxproj -> D:\VisualRepos\Hashtable\Visual_4sem\Metody_12_04\x64\Debug\Metody_12_04.exe
