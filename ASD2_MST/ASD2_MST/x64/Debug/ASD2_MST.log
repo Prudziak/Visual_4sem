@@ -1,0 +1,4 @@
+﻿  ASD2_MST.cpp
+ASD2_MST.obj : error LNK2019: nierozpoznany symbol zewnętrzny "public: __cdecl tree::~tree(void)" (??1tree@@QEAA@XZ) przywołany w funkcji "int `public: __cdecl algo::algo(void)'::`1'::dtor$0" (?dtor$0@?0???0algo@@QEAA@XZ@4HA)
+ASD2_MST.obj : error LNK2019: nierozpoznany symbol zewnętrzny "public: __cdecl edges::~edges(void)" (??1edges@@QEAA@XZ) przywołany w funkcji "public: __cdecl algo::~algo(void)" (??1algo@@QEAA@XZ)
+D:\VisualRepos\Hashtable\Visual_4sem\ASD2_MST\x64\Debug\ASD2_MST.exe : fatal error LNK1120: liczba nierozpoznanych elementów zewnętrznych: 2

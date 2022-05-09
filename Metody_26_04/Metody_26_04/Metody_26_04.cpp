@@ -1,6 +1,4 @@
 ﻿#include <iostream>
-#include <iomanip>
-
 
 using namespace std;
 
@@ -25,13 +23,11 @@ int main()
 
     hi = (xn2 - xi) / ni;
 
-    setprecision(6);
-
-    while (xi <= xn2)
+    while (xi < xn2)
     {
         yi += hi * fh(xi, yi);
-        cout << "y = " << yi << "\tx = " << xi << endl;
         xi += hi;
+        cout << "y = " << yi << "\tx = " << xi << endl;
     }
 
 
@@ -50,11 +46,11 @@ int main()
 
     h = (xn - x) / n;
 
-    while (x <= xn)
+    while (x < xn)
     {
+        x += h;
         y += (h / 2) * (fh(x, y) + fh(x + h, y + h * fh(x, y)));
         cout << "y = " << y << "\tx = " << x << endl;
-        x += h;
     }
 
     // metoda Eulera poprawiona
