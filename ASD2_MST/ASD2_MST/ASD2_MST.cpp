@@ -1,20 +1,57 @@
-﻿// ASD2_MST.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
-//
+﻿#include <iostream>
+#include <fstream>
 
-#include <iostream>
+using namespace std;
+
+class vertices
+{
+public:
+	int id;
+	string name;
+protected:
+	vertices() {};
+	~vertices() {};
+	void Input1(const char* fname);
+};
+
+void vertices::Input1(const char* fname)
+{
+	ifstream dane(fname);
+	int s1;
+	dane >> s1;
+	vertices* tab1 = new vertices[s1];
+	for (int i = 0; i < s1; i++)
+	{
+		dane >> tab1->id >> tab1->name;
+	}
+}
+
+class edges
+{
+public:
+	int e1, e2, value;
+protected:
+	edges() {}
+	~edges() {}
+	void Input2(const char* fname);
+	edges sort();
+};
+
+void edges::Input2(const char* fname)
+{
+	ifstream dane(fname);
+	int s2;
+	dane >> s2;
+	edges* tab2 = new edges[s2];
+	for (int i = 0; i < s2; i++)
+	{
+		dane >> tab2->e1 >> tab2->e2 >> tab2->value;
+	}
+	dane.close();
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	cout << "Hello world" << endl;
+	return 0;
 }
-
-// Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania
-// Debugowanie programu: F5 lub menu Debugowanie > Rozpocznij debugowanie
-
-// Porady dotyczące rozpoczynania pracy:
-//   1. Użyj okna Eksploratora rozwiązań, aby dodać pliki i zarządzać nimi
-//   2. Użyj okna programu Team Explorer, aby nawiązać połączenie z kontrolą źródła
-//   3. Użyj okna Dane wyjściowe, aby sprawdzić dane wyjściowe kompilacji i inne komunikaty
-//   4. Użyj okna Lista błędów, aby zobaczyć błędy
-//   5. Wybierz pozycję Projekt > Dodaj nowy element, aby utworzyć nowe pliki kodu, lub wybierz pozycję Projekt > Dodaj istniejący element, aby dodać istniejące pliku kodu do projektu
-//   6. Aby w przyszłości ponownie otworzyć ten projekt, przejdź do pozycji Plik > Otwórz > Projekt i wybierz plik sln
