@@ -1,3 +1,2 @@
 ﻿  Heapsort.cpp
-D:\visual projekty moje\Heapsort\Heapsort\Heapsort.cpp(69,3): error C2143: błąd składniowy: brakuje „;” przed „}”
-D:\visual projekty moje\Heapsort\Heapsort\Heapsort.cpp(68,4): warning C4551: wywołaniu funkcji brakuje listy argumentów
+  Heapsort.vcxproj -> G:\gitrepos\Visual_4sem\Heapsort\x64\Debug\Heapsort.exe
