@@ -6,14 +6,11 @@ using namespace std;
 
 int min_wartosc(int klucz[], bool odwiedzone[], int ver_size)
 {
-	int min = INT_MAX;
-	int min_indeks = 0;
+	int min = INT_MAX, min_indeks = NULL;
 
 	for (int i = 0; i < ver_size; i++)
-	{
 		if (odwiedzone[i] == false && klucz[i] < min)
 			min = klucz[i], min_indeks = i;
-	}
 
 	return min_indeks;
 }
@@ -28,13 +25,16 @@ int main()
 	map<int, string> vertices;
 	int ver_size = 0;
 	dane >> ver_size;
-	int id;
+	int id = 0;
 	string nazwa;
 	for (int i = 0; i < ver_size; i++)
 	{
 		dane >> id >> nazwa;
 		vertices[id] = nazwa;
-	}
+	}	 
+
+	//for (auto i = vertices.begin(); i != vertices.end(); ++i)
+		//cout << i->first << " " << i->second << endl;
 
 
 	//przechowywanie krawedzi i wag w macierzy sasiedztwa
@@ -59,8 +59,9 @@ int main()
 		dane >> a >> b >> value;
 		wmax = (a > wmax) ? a : wmax;
 		wmax = (b > wmax) ? b : wmax;
-		wagi[a - 1][b - 1] = value;
+		wagi[a-1][b-1] = value;
 	}
+
 
 	int* MST = new int[ver_size];
 	int* klucz = new int[ver_size];
@@ -81,20 +82,27 @@ int main()
 		int x = min_wartosc(klucz, odwiedzone, ver_size);
 
 		odwiedzone[x] = true;
+		MST[0] = x;
 
-		for (int j = 0; j < ver_size; j++)
+		for (int j = 1; j <= ver_size; j++)
 			if (wagi[x][j] && odwiedzone[j] == false && wagi[x][j] < klucz[j])
 			{
-				MST[j] = x;
+				if (MST[j - 1] == MST[j])
+					MST[j] = x + 1;
+				else 
+					MST[j] = x;
 				klucz[j] = wagi[x][j];
 			}
 	}
+	
 
-	for (int i = 1; i < ver_size; i++)
-	{
-		cout << vertices[MST[i]] << " " << vertices[i] << " " << wagi[i][MST[i]] << endl;
+	//for (int x = 0; x < ver_size; x++)
+		//cout << MST[x] << endl;
+
+	for (int i = 1; i < ver_size; ++i)
+	{	
+		cout << vertices[MST[i+1]] << " " << vertices[i+1] << " " << wagi[MST[i]][i] << endl;
 	}
-	int x = 0;
-	cin >> x;
+	dane.close();
 	return 0;
 }
